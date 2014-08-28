@@ -22,7 +22,7 @@ import os
 from collections import OrderedDict
 
 from ..common import MissingPackageError
-from ..logging import create_logger
+from ..logging import get_logger
 from ..errors import CubesError
 from ..metadata import read_model_metadata, write_model_metadata_bundle
 from .. import server
@@ -34,10 +34,12 @@ except ImportError:
 
 def validate_model(args):
     """docstring for validate_model"""
-    print("Reading model %s" % args.model)
+    logger = get_logger()
+
+    logger.info("Reading model %s" % args.model)
     model = cubes.read_model_metadata(args.model)
 
-    print("Validating model...\n")
+    logger.info("Validating model...\n")
     result = cubes.providers.validate_model(model)
 
     error_count = 0
@@ -67,7 +69,7 @@ def validate_model(args):
             default_count += 1
 
         if show:
-            print("%s in %s: %s"
+            logger.info("%s in %s: %s"
                   % (error.severity.upper(), scope, error.message))
 
     if error_count == 0:

@@ -16,6 +16,20 @@ class MixpanelError(Exception):
     pass
 
 class Mixpanel(object):
+    '''
+    Use like so. ::
+
+        api = Mixpanel(
+            api_key = 'YOUR KEY',
+            api_secret = 'YOUR SECRET'
+        )
+        data = api.request(['events'], {
+            'event' : ['pages',],
+            'unit' : 'hour',
+            'interval' : 24,
+            'type': 'general'
+        })
+    '''
 
     ENDPOINT = 'http://mixpanel.com/api'
     DATA_ENDPOINT = 'http://data.mixpanel.com/api'
@@ -118,16 +132,3 @@ class _MixpanelDataIterator(object):
         #
         line = next(self.line_iterator)
         return json.loads(line)
-
-if __name__ == '__main__':
-    api = Mixpanel(
-        api_key = 'YOUR KEY',
-        api_secret = 'YOUR SECRET'
-    )
-    data = api.request(['events'], {
-        'event' : ['pages',],
-        'unit' : 'hour',
-        'interval' : 24,
-        'type': 'general'
-    })
-    print data

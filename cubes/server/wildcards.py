@@ -13,6 +13,23 @@ _NOOP = lambda x: '||%s||' % x
 # This function removes all duplicates of query parameters that can be
 # obtained through args.getlist() (such as "?drilldown=x&drilldown=y")
 def proc_wildcards(args):
+    '''
+    For example, ::
+
+        cuts = (
+            'event_date:||last7||-||yesterday||',
+            'event_date:||last7weeks||-||today||',
+            'event_date:||last0month||-||yesterday||',
+            'event_date:||last7month||-||yesterday||',
+            'event_date:||last7quarters||-||yesterday||',
+            'event_date:||last7years||-||yesterday||',
+        )
+        for cut in cuts:
+            a = { 'cut': cut }
+            a2 = proc_wildcards(a)
+            print("%-40s  %s" % (cut, a2))
+    '''
+
     copy = args.copy()
     for k, v in args.iterlists():
         k = op(k)
@@ -109,17 +126,3 @@ _wildcards = {
 }
 
 _regex_wildcards = ( lastN, )
-
-if __name__ == '__main__':
-    cuts = (
-        'event_date:||last7||-||yesterday||',
-        'event_date:||last7weeks||-||today||',
-        'event_date:||last0month||-||yesterday||',
-        'event_date:||last7month||-||yesterday||',
-        'event_date:||last7quarters||-||yesterday||',
-        'event_date:||last7years||-||yesterday||',
-    )
-    for cut in cuts:
-        a = { 'cut': cut }
-        a2 = proc_wildcards(a)
-        print "%-40s  %s" % (cut, a2)
