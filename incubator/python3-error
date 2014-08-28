@@ -1,0 +1,35 @@
+[tlevine@arch cubes]$ sudo pip3 install .                                     [33/64]
+Unpacking /home/tlevine/git/cubes
+  Running setup.py (path:/tmp/pip-ft7vt46p-build/setup.py) egg_info for package from 
+file:///home/tlevine/git/cubes
+    
+Requirement already satisfied (use --upgrade to upgrade): pytz in /usr/lib/python3.4/
+site-packages (from cubes==1.0beta)
+Requirement already satisfied (use --upgrade to upgrade): python-dateutil in /usr/lib
+/python3.4/site-packages (from cubes==1.0beta)
+Requirement already satisfied (use --upgrade to upgrade): jsonschema in /usr/lib/pyth
+on3.4/site-packages (from cubes==1.0beta)
+Requirement already satisfied (use --upgrade to upgrade): six in /usr/lib/python3.4/s
+ite-packages (from python-dateutil->cubes==1.0beta)
+Installing collected packages: cubes                                           [2/46]
+  Running setup.py install for cubes
+      File "/usr/lib/python3.4/site-packages/cubes/backends/mixpanel/mixpanel.py", li
+ne 133
+        print data
+                 ^
+    SyntaxError: invalid syntax
+    
+      File "/usr/lib/python3.4/site-packages/cubes/backends/ga/browser.py", line 116
+        print "=== RESPONSE:"
+                            ^
+    SyntaxError: invalid syntax
+    
+      File "/usr/lib/python3.4/site-packages/cubes/server/wildcards.py", line 125
+        print "%-40s  %s" % (cut, a2)
+                        ^
+    SyntaxError: invalid syntax
+    
+    
+    Installing slicer script to /usr/bin
+Successfully installed cubes
+Cleaning up...
