@@ -1,0 +1,3 @@
+#!/usr/bin/env python
+import slicer.commands
+slicer.commands.main()
