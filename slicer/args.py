@@ -1,5 +1,13 @@
 import argparse
 
+# Can we just integrate this properly?
+try:
+    from cubes_modeler import ModelEditorSlicerCommand
+except ImportError:
+    ModelEditorSlicerCommand = None
+
+import slicer.commands as commands
+
 ################################################################################
 # Main code
 
@@ -9,6 +17,7 @@ subparsers = parser.add_subparsers(title='commands')
 parser.add_argument('--cubes-debug',
                     dest='cubes_debug', action='store_true', default=False,
                             help='internal cubes debugging')
+parser.set_defaults(func=lambda args:parser.print_help())
 
 ################################################################################
 # Command: valdate_model
@@ -28,7 +37,7 @@ parser_validate.add_argument('--no-warnings',
                             help='disable warnings')
 
 parser_validate.add_argument('model', help='model reference - can be a local file path or URL')
-parser_validate.set_defaults(func=validate_model)
+parser_validate.set_defaults(func=commands.validate_model)
 
 
 ################################################################################
@@ -39,7 +48,7 @@ if ModelEditorSlicerCommand:
 
     command = ModelEditorSlicerCommand()
     command.configure_parser(subparser)
-    subparser.det_defaults(func=command)
+    subparser.set_defaults(func=command)
 
 
 ################################################################################
@@ -56,7 +65,7 @@ subparser.add_argument('--force',
                             help='replace existing model bundle')
 subparser.add_argument('model', help='model reference - can be a path or URL')
 subparser.add_argument('target', help='target output path', nargs='?', default=None)
-subparser.set_defaults(func=convert_model)
+subparser.set_defaults(func=commands.convert_model)
 
 
 ################################################################################
@@ -64,7 +73,7 @@ subparser.set_defaults(func=convert_model)
 
 subparser = subparsers.add_parser('serve', help="run slicer server")
 subparser.add_argument('config', help='server confuguration .ini file')
-subparser.set_defaults(func=run_server)
+subparser.set_defaults(func=commands.run_server)
 subparser.set_defaults(foo="BAR")
 
 subparser.add_argument('--debug',
@@ -82,7 +91,7 @@ subparser.add_argument('--visualizer',
 subparser = subparsers.add_parser('test', help="test the configuration and model with backend")
 subparser.add_argument('config', help='server confuguration .ini file')
 subparser.add_argument('cube', help='cube to test', nargs='*', default=[])
-subparser.set_defaults(func=run_test)
+subparser.set_defaults(func=commands.run_test)
 
 subparser.add_argument('--aggregate',
                             dest='aggregate', action='store_true', default=False,
@@ -118,7 +127,7 @@ subparser.add_argument('-s', '--schema',
 subparser.add_argument('-c', '--cube',
                             dest='cube', action='append',
                             help='cube(s) to be denormalized, if not specified then all in the model')
-subparser.set_defaults(func=denormalize)
+subparser.set_defaults(func=commands.denormalize)
 
 ################################################################################
 # Command: ddl
@@ -143,4 +152,4 @@ subparser.add_argument('--fact-suffix',
 subparser.add_argument('--backend',
                             dest='backend',
                             help='backend name (currently limited only to SQL backends)')
-subparser.set_defaults(func=generate_ddl)
+subparser.set_defaults(func=commands.generate_ddl)

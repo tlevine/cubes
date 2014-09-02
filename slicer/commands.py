@@ -11,25 +11,18 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-from cubes import compat
-
 import json
 import sys
 import cubes
 import os
-
 from collections import OrderedDict
 
+from cubes import compat
 from cubes.common import MissingPackageError
 from cubes.logging import create_logger
 from cubes.errors import CubesError
 from cubes.metadata import read_model_metadata, write_model_metadata_bundle
 from cubes import server
-
-try:
-    from cubes_modeler import ModelEditorSlicerCommand
-except ImportError:
-    ModelEditorSlicerCommand = None
 
 def validate_model(args):
     """docstring for validate_model"""
@@ -322,22 +315,3 @@ def edit_model(args):
     webbrowser.open("http://127.0.0.1:%s" % port)
 
     run_modeler(args.model, args.target)
-
-def main():
-    args = parser.parse_args(sys.argv[1:])
-
-    if not args.func:
-        parser.print_help()
-        exit(0)
-
-    if args.cubes_debug:
-        args.func(args)
-    else:
-        try:
-            args.func(args)
-        except CubesError as e:
-            sys.stderr.write("ERROR: %s\n" % e)
-            exit(1)
-        except MissingPackageError as e:
-            sys.stderr.write("MISSING PACKAGE ERROR: %s\n" % e)
-            exit(2)
