@@ -17,7 +17,6 @@ subparsers = parser.add_subparsers(title='commands')
 parser.add_argument('--cubes-debug',
                     dest='cubes_debug', action='store_true', default=False,
                             help='internal cubes debugging')
-parser.set_defaults(func=lambda args:parser.print_help())
 
 ################################################################################
 # Command: valdate_model

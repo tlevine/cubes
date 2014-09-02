@@ -171,6 +171,7 @@ def generate_ddl(args):
 def run_server(args):
     """Run Slicer HTTP server."""
     config = read_config(args.config)
+    cubes.server
 
     if config.has_option("server", "pid_file"):
         path = config.get("server", "pid_file")

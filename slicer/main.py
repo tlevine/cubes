@@ -5,9 +5,11 @@ from .args import parser
 def main():
     args = parser.parse_args(sys.argv[1:])
 
-    if not args.func:
+    try:
+        args.func
+    except AttributeError:
         parser.print_help()
-        exit(0)
+        exit(1)
 
     if args.cubes_debug:
         args.func(args)
